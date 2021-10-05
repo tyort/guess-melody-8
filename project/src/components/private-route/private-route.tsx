@@ -7,6 +7,7 @@ type PrivateRouteProps = RouteProps & {
   authorizationStatus: AuthorizationStatus;
 }
 
+// обертка над "Route"
 function PrivateRoute(props: PrivateRouteProps): JSX.Element {
   const {exact, path, render, authorizationStatus} = props;
 
@@ -14,6 +15,8 @@ function PrivateRoute(props: PrivateRouteProps): JSX.Element {
     <Route
       exact={exact}
       path={path}
+
+      // Здесь мы переопределяем render
       render={() => (
         authorizationStatus === AuthorizationStatus.Auth
           ? render()

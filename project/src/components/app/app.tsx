@@ -39,6 +39,21 @@ function App({errorsCount}: AppScreenProps): JSX.Element {
         </Route>
         <Route>
           <NotFoundScreen />
+          {/*
+            render={(props) => {
+              console.log(`404 props`, props); можно увидеть служебные пропсы
+              return (
+                <Fragment>
+                  <h1>
+                    404.
+                    <br />
+                    <small>Page not found</small>
+                  </h1>
+                  <Link to="/">Go to main page</Link>
+                </Fragment>
+              );
+            }}
+          */}
         </Route>
       </Switch>
     </BrowserRouter>

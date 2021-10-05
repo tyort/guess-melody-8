@@ -15,6 +15,7 @@ type AppScreenProps = {
 function App({errorsCount}: AppScreenProps): JSX.Element {
   return (
     <BrowserRouter>
+      {/* Switch позволяет выбирать один из всех Route */}
       <Switch>
         <Route exact path={AppRoute.Root}>
           <WelcomeScreen

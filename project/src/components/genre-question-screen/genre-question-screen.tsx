@@ -5,6 +5,14 @@ type GenreQuestionScreenProps = {
   question: QuestionGenre;
 };
 
+// GenreQuestionScreenProps: {
+//   question: {
+//     answers: GenreAnswer[];
+//     genre: string;
+//     type: string;
+//   }
+// }
+
 function GenreQuestionScreen(props: GenreQuestionScreenProps): JSX.Element {
   const {question} = props;
   const {answers, genre} = question;

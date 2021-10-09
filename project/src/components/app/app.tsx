@@ -10,12 +10,16 @@ import NotFoundScreen from '../not-found-screen/not-found-screen';
 import PrivateRoute from '../private-route/private-route';
 import {Questions, QuestionGenre} from '../../types/question';
 
+// Названия свойств типа должны совпадать с пропсами родителя
 type AppScreenProps = {
   errorsCount: number;
   questions: Questions;
 }
 
 function App({errorsCount, questions}: AppScreenProps): JSX.Element {
+  // аналогично const {questions} = props
+  // questions имеет тип Questions или массив QuestionArtist | QuestionGenre
+  // соответственно firstQuestion имеет тип QuestionArtist | QuestionGenre
   const [firstQuestion] = questions;
 
   return (
@@ -32,6 +36,7 @@ function App({errorsCount, questions}: AppScreenProps): JSX.Element {
         </Route>
         <Route exact path={AppRoute.DevGenre}>
           <GenreQuestionScreen
+            // as - явно преобразуем объект к типу
             question={firstQuestion as QuestionGenre}
           />
         </Route>

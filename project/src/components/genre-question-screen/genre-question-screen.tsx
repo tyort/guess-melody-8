@@ -6,18 +6,14 @@ type GenreQuestionScreenProps = {
   question: QuestionGenre;
 };
 
-// GenreQuestionScreenProps: {
-//   question: {
-//     answers: GenreAnswer[];
-//     genre: string;
-//     type: string;
-//   }
-// }
-
 function GenreQuestionScreen(props: GenreQuestionScreenProps): JSX.Element {
   const {question} = props;
   const {answers, genre} = question;
 
+  // useState(начальное значение СОСТОЯНИЯ) - это хук, это функция;
+  // userAnswers - начальное значение СОСТОЯНИЯ, которое мы задали;
+  // setUserAnswers - аналог this.setState, ф-ия для обновления значения.
+  //                  При его вызове обновляется функциональный компонент и его дети;
   const [userAnswers, setUserAnswers] = useState([false, false, false, false]);
 
   return (
@@ -55,7 +51,10 @@ function GenreQuestionScreen(props: GenreQuestionScreenProps): JSX.Element {
                   <input className="game__input visually-hidden" type="checkbox" name="answer" value={`answer-${id}`}
                     id={`answer-${id}`}
                     checked={userAnswers[id]}
-                    onChange={({target}: ChangeEvent<HTMLInputElement>) => {
+                    // тайпинг ChangeEvent<HTMLInputElement> (см. импорт)
+                    // события в реакте синтетические
+                    onChange={(evt: ChangeEvent<HTMLInputElement>) => {
+                      const {target} = evt;
                       const value = target.checked;
                       setUserAnswers([...userAnswers.slice(0, id), value, ...userAnswers.slice(id + 1)]);
                     }}

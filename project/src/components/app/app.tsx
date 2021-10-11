@@ -38,6 +38,9 @@ function App({errorsCount, questions}: AppScreenProps): JSX.Element {
           <GenreQuestionScreen
             // as - явно преобразуем объект к типу
             question={firstQuestion as QuestionGenre}
+            onAnswer={() => {
+              throw new Error('Function \'onAnswer\' isn\'t implemented.');
+            }}
           />
         </Route>
         <Route exact path={AppRoute.Login}>

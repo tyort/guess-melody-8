@@ -8,7 +8,7 @@ import GameOverScreen from '../game-over-screen/game-over-screen';
 import WinScreen from '../win-screen/win-screen';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 import PrivateRoute from '../private-route/private-route';
-import {Questions, QuestionGenre} from '../../types/question';
+import {Questions, QuestionGenre, QuestionArtist} from '../../types/question';
 
 // Названия свойств типа должны совпадать с пропсами родителя
 type AppScreenProps = {
@@ -17,10 +17,7 @@ type AppScreenProps = {
 }
 
 function App({errorsCount, questions}: AppScreenProps): JSX.Element {
-  // аналогично const {questions} = props
-  // questions имеет тип Questions или массив QuestionArtist | QuestionGenre
-  // соответственно firstQuestion имеет тип QuestionArtist | QuestionGenre
-  const [firstQuestion] = questions;
+  const [firstQuestion, secondQuestion] = questions;
 
   return (
     <BrowserRouter>
@@ -32,7 +29,12 @@ function App({errorsCount, questions}: AppScreenProps): JSX.Element {
           />
         </Route>
         <Route exact path={AppRoute.DevArtist}>
-          <ArtistQuestionScreen />
+          <ArtistQuestionScreen
+            question={secondQuestion as QuestionArtist}
+            onAnswer={() => {
+              throw new Error('Function \'onAnswer\' isn\'t implemented.');
+            }}
+          />
         </Route>
         <Route exact path={AppRoute.DevGenre}>
           <GenreQuestionScreen

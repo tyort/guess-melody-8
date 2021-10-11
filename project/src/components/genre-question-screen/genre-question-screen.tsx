@@ -4,6 +4,7 @@ import {QuestionGenre, UserGenreQuestionAnswer} from '../../types/question';
 
 type GenreQuestionScreenProps = {
   question: QuestionGenre;
+  // Функция ничего не возвращает
   onAnswer: (question: QuestionGenre, answers: UserGenreQuestionAnswer) => void;
 };
 
@@ -41,6 +42,8 @@ function GenreQuestionScreen(props: GenreQuestionScreenProps): JSX.Element {
           className="game__tracks"
           onSubmit={(evt: FormEvent<HTMLFormElement>) => {
             evt.preventDefault();
+            // question - вопрос для пользователя;
+            // userAnswers - варианты ответов
             onAnswer(question, userAnswers);
           }}
         >

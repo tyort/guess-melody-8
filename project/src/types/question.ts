@@ -29,4 +29,5 @@ export type Question = QuestionArtist | QuestionGenre;
 
 export type Questions = Question[];
 
+// Изменить/добавить элементы в массиве не получится
 export type UserGenreQuestionAnswer = readonly boolean[];

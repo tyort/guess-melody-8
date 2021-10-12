@@ -29,7 +29,16 @@ function GameScreen({questions}: GameScreenProps): JSX.Element {
         <ArtistQuestionScreen
           key={step}
           question={question as QuestionArtist}
-          onAnswer={() => setStep((prevStep) => prevStep + 1)}
+
+          // ф-ия для обновления setStep принимает новую ф-ию;
+          // prevStep - текущее значение состояния
+          onAnswer={(vopros, artist) => {
+            // eslint-disable-next-line no-console
+            console.log(vopros);
+            // eslint-disable-next-line no-console
+            console.log(artist);
+            setStep((prevStep) => prevStep + 1);
+          }}
         />
       );
     case GameType.Genre:

@@ -1,16 +1,16 @@
 import {useState, FormEvent, ChangeEvent} from 'react';
 import Logo from '../logo/logo';
-import AudioPlayer from '../audio-player/audio-player';
 import {QuestionGenre, UserGenreQuestionAnswer} from '../../types/question';
 
 type GenreQuestionScreenProps = {
   question: QuestionGenre;
   // Функция ничего не возвращает
   onAnswer: (question: QuestionGenre, answers: UserGenreQuestionAnswer) => void;
+  renderPlayer: (src: string, playerIndex: number) => JSX.Element;
 };
 
 function GenreQuestionScreen(props: GenreQuestionScreenProps): JSX.Element {
-  const {question, onAnswer} = props;
+  const {question, onAnswer, renderPlayer} = props;
   const {answers, genre} = question;
 
   // useState(начальное значение СОСТОЯНИЯ) - это хук, это функция;
@@ -18,7 +18,6 @@ function GenreQuestionScreen(props: GenreQuestionScreenProps): JSX.Element {
   // setUserAnswers - аналог this.setState, ф-ия для обновления значения.
   //                  При его вызове обновляется функциональный компонент и его дети;
   const [userAnswers, setUserAnswers] = useState([false, false, false, false]);
-  const [activePlayer, setActivePlayer] = useState(0);
 
   return (
     <section className="game game--genre">
@@ -53,11 +52,7 @@ function GenreQuestionScreen(props: GenreQuestionScreenProps): JSX.Element {
             const keyValue = `${id}-${answer.src}`;
             return (
               <div key={keyValue} className="track">
-                <AudioPlayer
-                  isPlaying={id === activePlayer}
-                  src={answer.src}
-                  onPlayButtonClick = {() => setActivePlayer(activePlayer === id ? -1 : id)}
-                />
+                {renderPlayer(answer.src, id)}
                 <div className="game__answer">
                   <input className="game__input visually-hidden" type="checkbox" name="answer" value={`answer-${id}`}
                     id={`answer-${id}`}

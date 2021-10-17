@@ -1,15 +1,13 @@
 import {Fragment, useState, useEffect, useRef} from 'react';
 
 type AudioPlayerProps = {
-  autoPlay: boolean; // воспроизводить автоматически при загрузке компонента или нет
-  src: string; // путь к мелодии
+  isPlaying: boolean;
+  src: string;
+  onPlayButtonClick: () => void;
 }
 
-function AudioPlayer({autoPlay, src}: AudioPlayerProps): JSX.Element {
-  // [ мелодия загружается? , устанавливаем мелодия загружается/не_загружается ]
+function AudioPlayer({isPlaying, src, onPlayButtonClick}: AudioPlayerProps): JSX.Element {
   const [isLoading, setIsLoading] = useState(true);
-  // [ мелодия воспроизводится?(по умолчанию значение из пропса) , чо-то там ]
-  const [isPlaying, setIsPlaying] = useState(autoPlay);
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
@@ -51,7 +49,7 @@ function AudioPlayer({autoPlay, src}: AudioPlayerProps): JSX.Element {
         className={`track__button track__button--${isPlaying ? 'pause' : 'play'}`}
         type="button"
         disabled={isLoading}
-        onClick={() => setIsPlaying(!isPlaying)}
+        onClick={onPlayButtonClick}
       />
       <div className="track__status">
         {/* ref - поможет получить доступ из React к DOM-дереву, т.е. мы не можем использовать querySelector */}

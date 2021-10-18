@@ -6,6 +6,9 @@ import GenreQuestionScreen from '../genre-question-screen/genre-question-screen'
 import {QuestionArtist, QuestionGenre, Questions} from '../../types/question';
 import withAudioPlayer from '../../hocs/with-audio-player/with-audio-player';
 
+// При прорисовке этих двух компонентов, нам не надо в пропсах передавать renderPlayer,
+// В HOC используем состояние, а также объявляем колбэк, изменяющий это состояние
+// В самом HOC создадим пропс renderPlayer для обернутых компонентов
 const ArtistQuestionScreenWrapped = withAudioPlayer(ArtistQuestionScreen);
 const GenreQuestionScreenWrapped = withAudioPlayer(GenreQuestionScreen);
 

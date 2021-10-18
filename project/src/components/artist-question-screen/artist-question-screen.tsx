@@ -9,6 +9,7 @@ type ArtistQuestionScreenProps = {
 };
 
 function ArtistQuestionScreen(props: ArtistQuestionScreenProps): JSX.Element {
+  // Помимо родительских пропсов, передадим атрибуты из HOC
   const {question, onAnswer, renderPlayer} = props;
   const {answers, song} = question;
 

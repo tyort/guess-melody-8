@@ -17,6 +17,8 @@ const reducer = (state: State = initialState, action: Actions): State => {
     case ActionType.IncrementMistake:
       // TS понимает автоматически action = {type: 'game/incrementMistake', payload: number}
       return {...state, mistakes: state.mistakes + action.payload};
+    case ActionType.ResetGame:
+      return {...initialState};
     default:
       return state;
   }

@@ -1,16 +1,16 @@
-import {useState, FormEvent, ChangeEvent} from 'react';
+import {useState, FormEvent, ChangeEvent, PropsWithChildren} from 'react';
 import Logo from '../logo/logo';
 import {QuestionGenre, UserGenreQuestionAnswer} from '../../types/question';
 
-type GenreQuestionScreenProps = {
+type GenreQuestionScreenProps = PropsWithChildren<{
   question: QuestionGenre;
   // Функция ничего не возвращает
   onAnswer: (question: QuestionGenre, answers: UserGenreQuestionAnswer) => void;
   renderPlayer: (src: string, playerIndex: number) => JSX.Element;
-};
+}>;
 
 function GenreQuestionScreen(props: GenreQuestionScreenProps): JSX.Element {
-  const {question, onAnswer, renderPlayer} = props;
+  const {question, onAnswer, renderPlayer, children} = props;
   const {answers, genre} = question;
 
   // useState(начальное значение СОСТОЯНИЯ) - это хук, это функция;
@@ -30,11 +30,7 @@ function GenreQuestionScreen(props: GenreQuestionScreenProps): JSX.Element {
           />
         </svg>
 
-        <div className="game__mistakes">
-          <div className="wrong"/>
-          <div className="wrong"/>
-          <div className="wrong"/>
-        </div>
+        {children}
       </header>
 
       <section className="game__screen">

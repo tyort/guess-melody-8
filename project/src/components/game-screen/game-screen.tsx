@@ -1,6 +1,10 @@
-import {useState} from 'react';
 import {Redirect} from 'react-router-dom';
-import {AppRoute, GameType, FIRST_GAME_STEP} from '../../const';
+import {Dispatch} from 'redux';
+import {connect, ConnectedProps} from 'react-redux';
+import {incrementStep} from '../../store/action';
+import {AppRoute, GameType} from '../../const';
+import {State} from '../../types/state';
+import {Actions} from '../../types/action';
 import ArtistQuestionScreen from '../artist-question-screen/artist-question-screen';
 import GenreQuestionScreen from '../genre-question-screen/genre-question-screen';
 import {QuestionArtist, QuestionGenre, Questions} from '../../types/question';
@@ -16,10 +20,28 @@ type GameScreenProps = {
   questions: Questions;
 };
 
-function GameScreen({questions}: GameScreenProps): JSX.Element {
-  const [step, setStep] = useState(FIRST_GAME_STEP);
+// актуальные состояния данных из хранилища в одноименные пропсы компонента
+const mapStateToProps = ({step}: State) => ({
+  // новый пропс в компоненте
+  step,
+});
 
-  // Выбираем вопрос под нужным индексом
+// Без использования bindActionCreators
+const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({
+  // когда пользователь совершит событие onAnswer
+  // тогды мы сообщим хранилищу, что пора обновить поле step
+  onUserAnswer() {
+    dispatch(incrementStep());
+  },
+});
+
+const connector = connect(mapStateToProps, mapDispatchToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+type ConnectedComponentProps = PropsFromRedux & GameScreenProps;
+
+function GameScreen(props: ConnectedComponentProps): JSX.Element {
+  const {questions, step, onUserAnswer} = props;
   const question = questions[step];
 
   // Если шаг не существует
@@ -36,16 +58,7 @@ function GameScreen({questions}: GameScreenProps): JSX.Element {
         <ArtistQuestionScreenWrapped
           key={step}
           question={question as QuestionArtist}
-
-          // ф-ия для обновления setStep принимает новую ф-ию;
-          // prevStep - текущее значение состояния
-          onAnswer={(vopros, artist) => {
-            // eslint-disable-next-line no-console
-            console.log(vopros);
-            // eslint-disable-next-line no-console
-            console.log(artist);
-            setStep((prevStep) => prevStep + 1);
-          }}
+          onAnswer={onUserAnswer}
         />
       );
     case GameType.Genre:
@@ -53,7 +66,7 @@ function GameScreen({questions}: GameScreenProps): JSX.Element {
         <GenreQuestionScreenWrapped
           key={step}
           question={question as QuestionGenre}
-          onAnswer={() => setStep((prevStep) => prevStep + 1)}
+          onAnswer={onUserAnswer}
         />
       );
     default:
@@ -61,4 +74,5 @@ function GameScreen({questions}: GameScreenProps): JSX.Element {
   }
 }
 
-export default GameScreen;
+export {GameScreen};
+export default connector(GameScreen);

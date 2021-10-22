@@ -5,6 +5,7 @@ export enum ActionType {
   ResetGame = 'game/reset',
 }
 
+// Ниже представлены типы возвращаемых значений функций Action
 export type IncrementMistakeAction = {
   type: ActionType.IncrementMistake;
   payload: number;

@@ -1,5 +1,5 @@
 import {Switch, Route, BrowserRouter} from 'react-router-dom';
-import {AppRoute, AuthorizationStatus} from '../../const';
+import {AppRoute, AuthorizationStatus, MAX_MISTAKE_COUNT} from '../../const';
 import WelcomeScreen from '../welcome-screen/welcome-screen';
 import AuthScreen from '../auth-screen/auth-screen';
 import GameOverScreen from '../game-over-screen/game-over-screen';
@@ -7,22 +7,15 @@ import WinScreen from '../win-screen/win-screen';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 import PrivateRoute from '../private-route/private-route';
 import GameScreen from '../game-screen/game-screen';
-import {Questions} from '../../types/question';
 
-// Названия свойств типа должны совпадать с пропсами родителя
-type AppScreenProps = {
-  errorsCount: number;
-  questions: Questions;
-}
-
-function App({errorsCount, questions}: AppScreenProps): JSX.Element {
+function App(): JSX.Element {
   return (
     <BrowserRouter>
       {/* Switch позволяет выбирать один из всех Route */}
       <Switch>
         <Route exact path={AppRoute.Root}>
           <WelcomeScreen
-            errorsCount={errorsCount}
+            errorsCount={MAX_MISTAKE_COUNT}
           />
         </Route>
         <Route exact path={AppRoute.Login}>
@@ -39,9 +32,7 @@ function App({errorsCount, questions}: AppScreenProps): JSX.Element {
           <GameOverScreen />
         </Route>
         <Route exact path={AppRoute.Game}>
-          <GameScreen
-            questions={questions}
-          />
+          <GameScreen />
         </Route>
         <Route>
           <NotFoundScreen />

@@ -1,23 +1,22 @@
-import {
-  ActionType,
-  CheckUserAnswerAction,
-  IncrementStepAction,
-  ResetGameAction
-} from '../types/action';
+import {ActionType} from '../types/action';
 import {Question, UserAnswer} from '../types/question';
 
-export const checkUserAnswer = (question: Question, userAnswer: UserAnswer): CheckUserAnswerAction => ({
+// Благодаря такой конструкции мы сможем получить тип функции "typeof checkUserAnswer"
+// Из функции удаляем принудительное указание типа значения
+// Но функция фозвращает объект
+// Надо зафикисровать струтуру полей и наименования объекта (as const)
+export const checkUserAnswer = (question: Question, userAnswer: UserAnswer) => ({
   type: ActionType.CheckUserAnswer,
   payload: {
     question,
     userAnswer,
   },
-});
+} as const);
 
-export const incrementStep = (): IncrementStepAction => ({
+export const incrementStep = () => ({
   type: ActionType.IncrementStep,
-});
+} as const);
 
-export const resetGame = (): ResetGameAction => ({
+export const resetGame = () => ({
   type: ActionType.ResetGame,
-});
+} as const);

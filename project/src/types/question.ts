@@ -33,3 +33,5 @@ export type Questions = Question[];
 export type UserGenreQuestionAnswer = readonly boolean[];
 
 export type UserArtistQuestionAnswer = string;
+
+export type UserAnswer = UserArtistQuestionAnswer | UserGenreQuestionAnswer;

@@ -1,14 +1,17 @@
 import {
   ActionType,
-  IncrementMistakeAction,
+  CheckUserAnswerAction,
   IncrementStepAction,
   ResetGameAction
 } from '../types/action';
+import {Question, UserAnswer} from '../types/question';
 
-// IncrementMistakeAction - тип возвращаемого объекта
-export const incrementMistake = (count: number): IncrementMistakeAction => ({
-  type: ActionType.IncrementMistake, // имя действия
-  payload: count,
+export const checkUserAnswer = (question: Question, userAnswer: UserAnswer): CheckUserAnswerAction => ({
+  type: ActionType.CheckUserAnswer,
+  payload: {
+    question,
+    userAnswer,
+  },
 });
 
 export const incrementStep = (): IncrementStepAction => ({

@@ -1,5 +1,5 @@
 import {ActionType} from '../types/action';
-import {Question, UserAnswer} from '../types/question';
+import {Question, Questions, UserAnswer} from '../types/question';
 
 // Благодаря такой конструкции мы сможем получить тип функции "typeof checkUserAnswer"
 // Из функции удаляем принудительное указание типа значения
@@ -19,4 +19,11 @@ export const incrementStep = () => ({
 
 export const resetGame = () => ({
   type: ActionType.ResetGame,
+} as const);
+
+export const loadQuestions = (questions: Questions) => ({
+  type: ActionType.LoadQuestions,
+  payload: {
+    questions,
+  },
 } as const);

@@ -31,6 +31,8 @@ const reducer = (state: State = initialState, action: Actions): State => {
     }
     case ActionType.ResetGame:
       return {...initialState};
+    case ActionType.LoadQuestions:
+      return {...state, questions};
     default:
       return state;
   }

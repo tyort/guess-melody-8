@@ -1,4 +1,5 @@
-import axios, {AxiosInstance, AxiosResponse, AxiosError} from 'axios';
+import axios, {AxiosInstance, AxiosRequestConfig, AxiosResponse, AxiosError} from 'axios';
+import {getToken} from './token';
 
 const BACKEND_URL = 'https://8.react.pages.academy/guess-melody'; // путь на сервер
 const REQUEST_TIMEOUT = 5000; // по истечении этого времени прекращаем запрос
@@ -34,6 +35,23 @@ export const createAPI = (onUnauthorized: UnauthorizedCallback): AxiosInstance =
 
       // возвращаем отклоненный промис
       return Promise.reject(error);
+    },
+  );
+
+  // запросы от клиента
+  api.interceptors.request.use(
+    // до отправки запроса сработает функция
+    (config: AxiosRequestConfig) => {
+      // Извлекаем из localsorage токен
+      const token = getToken();
+
+      if (token) {
+        // если есть, то добавляем в заголовок 'x-token'
+        config.headers['x-token'] = token;
+      }
+
+      // что такое config??????
+      return config;
     },
   );
 

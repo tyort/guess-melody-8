@@ -17,20 +17,24 @@ import withAudioPlayer from '../../hocs/with-audio-player/with-audio-player';
 const ArtistQuestionScreenWrapped = withAudioPlayer(ArtistQuestionScreen);
 const GenreQuestionScreenWrapped = withAudioPlayer(GenreQuestionScreen);
 
+// Этот метод вызывается при обновлении store
 const mapStateToProps = ({step, mistakes, questions}: State) => ({
   step,
   mistakes,
   questions,
 });
 
-// Без использования bindActionCreators
+// Эта функция передаёт в компонент методы для обновления необходимого поля store.
 const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({
   onUserAnswer(question: Question, userAnswer: UserAnswer) {
+    // метод dispatch обновляет store
     dispatch(incrementStep());
     dispatch(checkUserAnswer(question, userAnswer));
   },
 });
 
+// Мы можем использовать метод connect, потому что подключили <Provider store = {store}>
+// связывает mapStateToProps и mapDispatchToProps с компонентом и передает необходимые поля и методы в него.
 const connector = connect(mapStateToProps, mapDispatchToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
@@ -74,4 +78,5 @@ function GameScreen(props: PropsFromRedux): JSX.Element {
 }
 
 export {GameScreen};
+// Возвращает она новый компонент-обёртку для вашего компонента.
 export default connector(GameScreen);

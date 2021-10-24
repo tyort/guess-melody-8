@@ -9,7 +9,7 @@ type WelcomeScreenProps = {
   errorsCount: number;
 };
 
-// С использованием bindActionCreators, так короче просто перечислять action
+// bindActionCreators - оборачивает dispatch и actionCreator в единый объект, так короче просто перечислять action
 const mapDispatchToProps = (dispatch: Dispatch<Actions>) => bindActionCreators({
   onResetGame: resetGameState,
 }, dispatch);

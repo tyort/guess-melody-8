@@ -5,7 +5,10 @@ import {APIRoute, AuthorizationStatus} from '../const';
 import {Question} from '../types/question';
 import {AuthData} from '../types/auth-data';
 
+// Получается fetchQuestionAction поможет вызвать функцию вместо объекта
+// Диспатчинг синхронного действия произойдет после асинхронного await
 export const fetchQuestionAction = (): ThunkActionResult =>
+  // api - аргумент из index.tsx
   async (dispatch, _getState, api): Promise<void> => {
     const {data} = await api.get<Question[]>(APIRoute.Questions);
     dispatch(loadQuestions(data));

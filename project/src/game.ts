@@ -1,5 +1,5 @@
 import {Question, QuestionArtist, QuestionGenre, UserArtistQuestionAnswer, UserGenreQuestionAnswer, UserAnswer} from './types/question';
-import {GameType} from './const';
+import {GameType, AuthorizationStatus} from './const';
 
 // Более абстрактная функция, которая проверяет корректность ответа для любого вопроса
 export const isAnswerCorrect = (question: Question, answer: UserAnswer): boolean => {
@@ -26,3 +26,6 @@ export const isGenreAnswerCorrect = (question: QuestionGenre, userAnswer: UserGe
   userAnswer.every((answer, index) =>
     // ответ_пользователя === в рамках самого вопроса совпадение по жанру
     answer === (question.answers[index].genre === question.genre));
+
+export const isCheckedAuth = (authorizationStatus: AuthorizationStatus): boolean =>
+  authorizationStatus === AuthorizationStatus.Unknown;

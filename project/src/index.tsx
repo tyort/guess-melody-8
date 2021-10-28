@@ -11,6 +11,7 @@ import {requireAuthorization} from './store/action';
 import {fetchQuestionAction, checkAuthAction} from './store/api-actions';
 import {ThunkAppDispatch} from './types/action';
 import {AuthorizationStatus} from './const';
+import {redirect} from './store/middlewares/redirect';
 
 // api - вернет сконфигурированный экземпляр axios
 // потом этот аргумент мы сможем передавать в качестве аргумента в api-actions
@@ -27,6 +28,7 @@ const store = createStore(
     // для регистрации middleware
     // withExtraArgument - для передачи асинхронной переменной
     applyMiddleware(thunk.withExtraArgument(api)),
+    applyMiddleware(redirect),
   ),
 );
 

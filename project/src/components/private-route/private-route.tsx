@@ -10,6 +10,7 @@ type RenderFuncProps = {
 }
 
 type PrivateRouteProps = RouteProps & {
+  // от родителя в качестве аргумента должен прийти объект со значение ключа history
   render: (props: RenderFuncProps) => JSX.Element;
   authorizationStatus: AuthorizationStatus;
 }

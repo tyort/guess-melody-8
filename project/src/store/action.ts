@@ -1,6 +1,6 @@
 import {ActionType} from '../types/action';
 import {Question, Questions, UserAnswer} from '../types/question';
-import {AuthorizationStatus} from '../const';
+import {AppRoute, AuthorizationStatus} from '../const';
 
 // Благодаря такой конструкции мы сможем получить тип функции "typeof checkUserAnswer"
 // Из функции удаляем принудительное указание типа значения
@@ -36,4 +36,9 @@ export const requireAuthorization = (authStatus: AuthorizationStatus) => ({
 
 export const requireLogout = () => ({
   type: ActionType.RequireLogout,
+} as const);
+
+export const redirectToRoute = (url: AppRoute) => ({
+  type: ActionType.RedirectToRoute,
+  payload: url,
 } as const);

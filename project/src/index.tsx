@@ -25,9 +25,12 @@ const store = createStore(
   reducer,
   // поддержка DevTools
   composeWithDevTools(
-    // для регистрации middleware
+    // Здесь регистрируем middleware
+
     // withExtraArgument - для передачи асинхронной переменной
     applyMiddleware(thunk.withExtraArgument(api)),
+
+    // Для реализации перенаправления через api-action
     applyMiddleware(redirect),
   ),
 );

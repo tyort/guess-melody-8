@@ -1,12 +1,16 @@
 import {Route, Redirect} from 'react-router-dom';
 import {RouteProps} from 'react-router-dom';
 import {connect, ConnectedProps} from 'react-redux';
+import {History} from 'history'; // импортируем только чтобы указать тип
 import {State} from '../../types/state';
 import {AppRoute, AuthorizationStatus} from '../../const';
 
+type RenderFuncProps = {
+  history: History<unknown>;
+}
+
 type PrivateRouteProps = RouteProps & {
-  // изменяем некоторые пропсы
-  render: () => JSX.Element;
+  render: (props: RenderFuncProps) => JSX.Element;
   authorizationStatus: AuthorizationStatus;
 }
 
@@ -26,11 +30,9 @@ function PrivateRoute(props: ConnectedComponentProps): JSX.Element {
     <Route
       exact={exact}
       path={path}
-
-      // Здесь мы переопределяем render
-      render={() => (
+      render={(routeProps) => (
         authorizationStatus === AuthorizationStatus.Auth
-          ? render()
+          ? render(routeProps)
           : <Redirect to={AppRoute.Login} />
       )}
     />

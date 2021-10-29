@@ -12,6 +12,8 @@ import {fetchQuestionAction, checkAuthAction} from './store/api-actions';
 import {ThunkAppDispatch} from './types/action';
 import {AuthorizationStatus} from './const';
 import {redirect} from './store/middlewares/redirect';
+import {ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 // api - вернет сконфигурированный экземпляр axios
 // потом этот аргумент мы сможем передавать в качестве аргумента в api-actions
@@ -44,6 +46,7 @@ ReactDOM.render(
     {/* Для возможности использовать store в компонентах,
     вследствие этого мы можем использовать метод connect*/}
     <Provider store = {store}>
+      <ToastContainer />
       <App />
     </Provider>
   </React.StrictMode>,

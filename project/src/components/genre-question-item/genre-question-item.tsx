@@ -23,7 +23,11 @@ function GenreQuestionItem(props: GenreQuestionItemProps): JSX.Element {
           value={`answer-${id}`}
           id={`answer-${id}`}
           checked={userAnswer}
-          onChange={({target}: ChangeEvent<HTMLInputElement>) => {
+          onChange={({target, currentTarget}: ChangeEvent<HTMLInputElement>) => {
+            // eslint-disable-next-line no-console
+            console.log(target);
+            // eslint-disable-next-line no-console
+            console.log(currentTarget);
             const value = target.checked;
             onChange(id, value);
           }}

@@ -1,5 +1,6 @@
-import {FormEvent, ChangeEvent, PropsWithChildren} from 'react';
+import {FormEvent, PropsWithChildren} from 'react';
 import Logo from '../logo/logo';
+import GenreQuestionItem from '../genre-question-item/genre-question-item';
 import {useUserAnswers} from '../../hooks/use-user-answers';
 import {QuestionGenre, UserGenreQuestionAnswer} from '../../types/question';
 
@@ -15,6 +16,10 @@ function GenreQuestionScreen(props: GenreQuestionScreenProps): JSX.Element {
   const {answers, genre} = question;
 
   // Этот hook помог нам избавится от состояния в этом компоненте
+  // В самом хуке описываем:
+  //       ЗДЕСЬ при вызове handleAnswer() -> у родителя диспатчим действие
+  //       userAnswers - имеет всегда актуальные значения
+  //       handleAnswerChange - вызывает стейт при возникновении события у ребенка
   const [userAnswers, handleAnswer, handleAnswerChange] = useUserAnswers(question, onAnswer);
 
   return (
@@ -37,30 +42,20 @@ function GenreQuestionScreen(props: GenreQuestionScreenProps): JSX.Element {
           className="game__tracks"
           onSubmit={(evt: FormEvent<HTMLFormElement>) => {
             evt.preventDefault();
-            // возвращает хук для диспатча действия
             handleAnswer();
           }}
         >
           {answers.map((answer, id) => {
             const keyValue = `${id}-${answer.src}`;
             return (
-              <div key={keyValue} className="track">
-                {renderPlayer(answer.src, id)}
-                <div className="game__answer">
-                  <input className="game__input visually-hidden" type="checkbox" name="answer" value={`answer-${id}`}
-                    id={`answer-${id}`}
-                    // userAnswers - ответы пользователя возвращает хук
-                    checked={userAnswers[id]}
-                    onChange={(evt: ChangeEvent<HTMLInputElement>) => {
-                      const {target} = evt;
-                      const value = target.checked;
-                      // возвращает хук для изменения состояния
-                      handleAnswerChange(id, value);
-                    }}
-                  />
-                  <label className="game__check" htmlFor={`answer-${id}`}>Отметить</label>
-                </div>
-              </div>
+              <GenreQuestionItem
+                answer={answer}
+                id={id}
+                key={keyValue}
+                onChange={handleAnswerChange}
+                renderPlayer={renderPlayer}
+                userAnswer={userAnswers[id]}
+              />
             );
           })}
 

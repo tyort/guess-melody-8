@@ -37,7 +37,7 @@ function GenreQuestionScreen(props: GenreQuestionScreenProps): JSX.Element {
           className="game__tracks"
           onSubmit={(evt: FormEvent<HTMLFormElement>) => {
             evt.preventDefault();
-            // из хука для диспатча действия
+            // возвращает хук для диспатча действия
             handleAnswer();
           }}
         >
@@ -49,12 +49,12 @@ function GenreQuestionScreen(props: GenreQuestionScreenProps): JSX.Element {
                 <div className="game__answer">
                   <input className="game__input visually-hidden" type="checkbox" name="answer" value={`answer-${id}`}
                     id={`answer-${id}`}
-                    // userAnswers - ответы пользователя из хука
+                    // userAnswers - ответы пользователя возвращает хук
                     checked={userAnswers[id]}
                     onChange={(evt: ChangeEvent<HTMLInputElement>) => {
                       const {target} = evt;
                       const value = target.checked;
-                      // из хука для изменения состояния
+                      // возвращает хук для изменения состояния
                       handleAnswerChange(id, value);
                     }}
                   />

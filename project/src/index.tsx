@@ -1,10 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {createStore, applyMiddleware} from 'redux';
-import thunk from 'redux-thunk';
+
+// Можно убрать импорты redux и redux-thunk. Они и так в этом пакете есть
+import {configureStore} from '@reduxjs/toolkit';
+
 import {createAPI} from './services/api';
-import {composeWithDevTools} from 'redux-devtools-extension';
-import {Provider} from 'react-redux'; // мостик между React и Redux
+import {Provider} from 'react-redux';
 import App from './components/app/app';
 import {rootReducer} from './store/root-reducer';
 import {requireAuthorization} from './store/action';
@@ -22,24 +23,20 @@ const api = createAPI(
   () => store.dispatch(requireAuthorization(AuthorizationStatus.NoAuth)),
 );
 
-// Глобальное хранилище приложения
-const store = createStore(
-  // Подключение редьюсера при создании хранилища
-  rootReducer,
-  composeWithDevTools( // Поддержка DevTools. Здесь регистрируем middleware
-    // Посредник в Redux. В момент между:
-    //  1) Мы бросили экшен,
-    //  2) Экшн обработал редьюсер.
-    // -- можно совершить действие
+// configureStore - конфигурируем хранилище, в качестве аргумента: объект с настройками, включена подддержка Redux DevTools
+const store = configureStore({
+  reducer: rootReducer, // корневой редьюсер
 
-    // withExtraArgument - для передачи асинхронной переменной
-    applyMiddleware(thunk.withExtraArgument(api)),
+  // devTools: false, // отключить Redux DevTools
 
-    // Для реализации перенаправления через api-action
-    // все экшн store проходят через redirect
-    applyMiddleware(redirect),
-  ),
-);
+  middleware: (getDefaultMiddleware) =>
+    // getDefaultMiddleware - возвращает массив с middleware
+    getDefaultMiddleware({
+      thunk: {
+        extraArgument: api,
+      },
+    }).concat(redirect),
+});
 
 // Диспатчим асинхронные действия checkAuthAction и fetchQuestionAction
 (store.dispatch as ThunkAppDispatch)(checkAuthAction());

@@ -12,5 +12,11 @@ export const redirect: Middleware<unknown, State> =
           browserHistory.push(action.payload);
         }
 
-        return next(action);
+        // Здесь(перед next) можно использовать "действия" и "состояние" до изменения состояния "редьюсером"
+
+        const result = next(action); // передаём результат следующему middleware.
+
+        // Здесь(после next) уже действие обработано редьюсером и мы имеем актуальный стейт
+
+        return result;
       };

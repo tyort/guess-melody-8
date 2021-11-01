@@ -6,7 +6,7 @@ import {createAPI} from './services/api';
 import {composeWithDevTools} from 'redux-devtools-extension';
 import {Provider} from 'react-redux'; // мостик между React и Redux
 import App from './components/app/app';
-import {reducer} from './store/reducer';
+import {rootReducer} from './store/root-reducer';
 import {requireAuthorization} from './store/action';
 import {fetchQuestionAction, checkAuthAction} from './store/api-actions';
 import {ThunkAppDispatch} from './types/action';
@@ -24,15 +24,19 @@ const api = createAPI(
 
 // Глобальное хранилище приложения
 const store = createStore(
-  reducer,
-  // поддержка DevTools
-  composeWithDevTools(
-    // Здесь регистрируем middleware
+  // Подключение редьюсера при создании хранилища
+  rootReducer,
+  composeWithDevTools( // Поддержка DevTools. Здесь регистрируем middleware
+    // Посредник в Redux. В момент между:
+    //  1) Мы бросили экшен,
+    //  2) Экшн обработал редьюсер.
+    // -- можно совершить действие
 
     // withExtraArgument - для передачи асинхронной переменной
     applyMiddleware(thunk.withExtraArgument(api)),
 
     // Для реализации перенаправления через api-action
+    // все экшн store проходят через redirect
     applyMiddleware(redirect),
   ),
 );

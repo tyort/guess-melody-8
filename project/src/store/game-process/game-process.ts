@@ -17,6 +17,7 @@ const gameProcess = (state = initialState, action: Actions): GameProcess => {
     }
     case ActionType.CheckUserAnswer: {
       const {question, userAnswer} = action.payload;
+      // проверка на допустимое количество ошибок в компоненте game-screen
       return {...state, mistakes: state.mistakes + Number(!isAnswerCorrect(question, userAnswer))};
     }
     case ActionType.ResetGame:

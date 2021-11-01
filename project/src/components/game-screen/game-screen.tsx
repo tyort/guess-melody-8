@@ -17,11 +17,10 @@ import withAudioPlayer from '../../hocs/with-audio-player/with-audio-player';
 const ArtistQuestionScreenWrapped = withAudioPlayer(ArtistQuestionScreen);
 const GenreQuestionScreenWrapped = withAudioPlayer(GenreQuestionScreen);
 
-// Этот метод вызывается при обновлении store
-const mapStateToProps = ({step, mistakes, questions}: State) => ({
-  step,
-  mistakes,
-  questions,
+const mapStateToProps = ({GAME, DATA}: State) => ({
+  step: GAME.step,
+  mistakes: GAME.mistakes,
+  questions: DATA.questions,
 });
 
 // Эта функция передаёт в компонент методы для обновления необходимого поля store.

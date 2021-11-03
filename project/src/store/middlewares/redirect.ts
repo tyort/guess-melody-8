@@ -14,7 +14,7 @@ export const redirect: Middleware<unknown, State> =
 
         // Здесь(перед next) можно использовать "действия" и "состояние" до изменения состояния "редьюсером"
 
-        const result = next(action); // передаём результат следующему middleware.
+        const result = next(action); // передаём action следующему middleware.
 
         // Здесь(после next) уже действие обработано редьюсером и мы имеем актуальный стейт
 

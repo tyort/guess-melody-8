@@ -2,15 +2,14 @@ import {useHistory} from 'react-router-dom';
 import {bindActionCreators, Dispatch} from 'redux';
 import {connect, ConnectedProps} from 'react-redux';
 import {resetGame as resetGameState} from '../../store/action';
-import {Actions} from '../../types/action';
 import {AppRoute} from '../../const';
 
 type WelcomeScreenProps = {
   errorsCount: number;
 };
 
-// bindActionCreators - оборачивает dispatch и actionCreator в единый объект, так короче просто перечислять action
-const mapDispatchToProps = (dispatch: Dispatch<Actions>) => bindActionCreators({
+// С использованием bindActionCreators
+const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({
   onResetGame: resetGameState,
 }, dispatch);
 

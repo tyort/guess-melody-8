@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-// Можно убрать импорты redux и redux-thunk. Они и так в этом пакете есть
+// Можно убрать импорты redux, redux-devtools-extension и redux-thunk. Они и так в этом пакете есть
 import {configureStore} from '@reduxjs/toolkit';
 
 import {createAPI} from './services/api';
@@ -10,7 +10,6 @@ import App from './components/app/app';
 import {rootReducer} from './store/root-reducer';
 import {requireAuthorization} from './store/action';
 import {fetchQuestionAction, checkAuthAction} from './store/api-actions';
-import {ThunkAppDispatch} from './types/action';
 import {AuthorizationStatus} from './const';
 import {redirect} from './store/middlewares/redirect';
 import {ToastContainer} from 'react-toastify';
@@ -39,8 +38,8 @@ const store = configureStore({
 });
 
 // Диспатчим асинхронные действия checkAuthAction и fetchQuestionAction
-(store.dispatch as ThunkAppDispatch)(checkAuthAction());
-(store.dispatch as ThunkAppDispatch)(fetchQuestionAction());
+store.dispatch(checkAuthAction());
+store.dispatch(fetchQuestionAction());
 
 ReactDOM.render(
   <React.StrictMode>

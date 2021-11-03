@@ -1,8 +1,7 @@
 import {Route, Redirect} from 'react-router-dom';
 import {RouteProps} from 'react-router-dom';
-import {connect, ConnectedProps} from 'react-redux';
-import {History} from 'history'; // импортируем только чтобы указать тип
-import {State} from '../../types/state';
+import {useSelector} from 'react-redux';
+import {History} from 'history';
 import {AppRoute, AuthorizationStatus} from '../../const';
 import {getAuthorizationStatus} from '../../store/user-process/selectors';
 
@@ -13,22 +12,12 @@ type RenderFuncProps = {
 type PrivateRouteProps = RouteProps & {
   // от родителя в качестве аргумента должен прийти объект со значение ключа history
   render: (props: RenderFuncProps) => JSX.Element;
-  authorizationStatus: AuthorizationStatus;
 }
 
-const mapStateToProps = (state: State) => ({
-  // getAuthorizationStatus(state) - значение ключа(выбрано под капотом)
-  //                                 из нужного стейта(выбрано под капотом)
-  authorizationStatus: getAuthorizationStatus(state),
-});
+function PrivateRoute(props: PrivateRouteProps): JSX.Element {
+  const {exact, path, render} = props;
 
-const connector = connect(mapStateToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-type ConnectedComponentProps = PropsFromRedux & PrivateRouteProps;
-
-function PrivateRoute(props: ConnectedComponentProps): JSX.Element {
-  const {exact, path, render, authorizationStatus} = props;
+  const authorizationStatus = useSelector(getAuthorizationStatus);
 
   return (
     <Route
@@ -43,5 +32,4 @@ function PrivateRoute(props: ConnectedComponentProps): JSX.Element {
   );
 }
 
-export {PrivateRoute};
-export default connector(PrivateRoute);
+export default PrivateRoute;

@@ -9,6 +9,7 @@ const initialState: UserProcess = {
 
 const userProcess = createReducer(initialState, (builder) => {
   builder
+    // requireAuthorization дает под капотом requireAuthorization.toString() - это тип требуемого действия
     .addCase(requireAuthorization, (state, action) => {
       state.authorizationStatus = action.payload;
     })

@@ -1,24 +1,37 @@
-import {isArtistAnswerCorrect} from './game';
-import {makeFakeArtistQuestion} from './utils/mocks';
+import {isArtistAnswerCorrect, isGenreAnswerCorrect} from './game';
+import {makeFakeArtistQuestion, makeFakeGenreQuestion} from './utils/mocks';
 
 const mockArtistQuestion = makeFakeArtistQuestion();
+const mockGenreQuestion = makeFakeGenreQuestion();
 
-// Актуальные для функции тесты внутри describe
-describe('Function: isArtistAnswerCorrect', () => {
+describe('Business Logiс: check user\'s answer', () => {
+  describe('Function: isArtistAnswerCorrect', () => {
+    it('should return "true" when answer is correct', () => {
+      const {artist: correctAnswer} = mockArtistQuestion.song;
+      expect(isArtistAnswerCorrect(mockArtistQuestion, correctAnswer))
+        .toBe(true);
+    });
 
-  // в '...' обязанности функции
-  it('should return "true" when answer is correct', () => {
-    const {artist: correctAnswer} = mockArtistQuestion.song;
-
-    // Когда мы вызываем isArtistAnswerCorrect(mockArtistQuestion, correctAnswer),
-    // то результат должен быть "true"
-    expect(isArtistAnswerCorrect(mockArtistQuestion, correctAnswer))
-      .toBe(true);
+    it('should return "false" when answer is incorrect', () => {
+      const incorrectAnswer = 'unknown';
+      expect(isArtistAnswerCorrect(mockArtistQuestion, incorrectAnswer))
+        .toBe(false);
+    });
   });
 
-  it('should return "false" when answer is incorrect', () => {
-    const incorrectAnswer = 'unknown';
-    expect(isArtistAnswerCorrect(mockArtistQuestion, incorrectAnswer))
-      .toBe(false);
+  describe('Function: isGenreAnswerCorrect', () => {
+    it('should return "true" when answer is correct', () => {
+      const {answers} = mockGenreQuestion;
+      const correctAnswer = answers.map((answer) => answer.genre === mockGenreQuestion.genre);
+      expect(isGenreAnswerCorrect(mockGenreQuestion, correctAnswer))
+        .toBe(true);
+    });
+
+    it('should be return "false" when answer is incorrect', () => {
+      const {answers} = mockGenreQuestion;
+      const incorrectAnswer = answers.map((answer) => answer.genre !== mockGenreQuestion.genre);
+      expect(isGenreAnswerCorrect(mockGenreQuestion, incorrectAnswer))
+        .toBe(false);
+    });
   });
 });

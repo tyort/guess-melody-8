@@ -12,7 +12,7 @@ const initialState: GameData = {
 const gameData = createReducer(initialState, (builder) => {
   builder
     // loadQuestions - функция, с помощью которой создаётся действие. НЕ РЕЗУЛЬТАТ выполнения
-    // (под капотом)loadQuestions.toString() - Какое действие создаёт функция
+    // (под капотом)loadQuestions.toString() - Какое действие создаёт функция(на выбор из enum ActionType)
     .addCase(loadQuestions, (state, action) => {
       const {questions} = action.payload;
 

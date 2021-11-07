@@ -9,7 +9,7 @@ import {AuthData} from '../types/auth-data';
 const AUTH_FAIL_MESSAGE = 'Не забудьте авторизоваться';
 
 export const fetchQuestionAction = (): ThunkActionResult =>
-  // api - аргумент из index.tsx
+  // api - сконфигурированный экземпляр axios (а также extraArgument)
   async (dispatch, _getState, api): Promise<void> => {
     const {data} = await api.get<Question[]>(APIRoute.Questions);
     dispatch(loadQuestions(data));

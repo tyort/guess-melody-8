@@ -1,5 +1,5 @@
 import {connect, ConnectedProps} from 'react-redux';
-import {Switch, Route, Router as BrowserRouter} from 'react-router-dom';
+import {Switch, Route} from 'react-router-dom';
 import {AppRoute, MAX_MISTAKE_COUNT} from '../../const';
 import WelcomeScreen from '../welcome-screen/welcome-screen';
 import AuthScreen from '../auth-screen/auth-screen';
@@ -11,7 +11,6 @@ import GameScreen from '../game-screen/game-screen';
 import LoadingScreen from '../loading-screen/loading-screen';
 import {isCheckedAuth} from '../../game';
 import {State} from '../../types/state';
-import browserHistory from '../../browser-history';
 
 const mapStateToProps = ({USER, DATA}: State) => ({
   authorizationStatus: USER.authorizationStatus,
@@ -32,58 +31,55 @@ function App(props: PropsFromRedux): JSX.Element {
   }
 
   return (
-    // Под капотом BrowserRouter === Router, никак не BrowserRouter === BrowserRouter. Зато так можно передать пропсы
-    <BrowserRouter history={browserHistory}>
-      <Switch>
-        <Route exact path={AppRoute.Root}>
-          <WelcomeScreen
-            errorsCount={MAX_MISTAKE_COUNT}
+    <Switch>
+      <Route exact path={AppRoute.Root}>
+        <WelcomeScreen
+          errorsCount={MAX_MISTAKE_COUNT}
+        />
+      </Route>
+      <Route exact path={AppRoute.Login}>
+        <AuthScreen />
+      </Route>
+      <PrivateRoute
+        exact
+        path={AppRoute.Result}
+        render={({history}) => (
+          <WinScreen
+            onReplayButtonClick={() => history.push(AppRoute.Game)}
           />
-        </Route>
-        <Route exact path={AppRoute.Login}>
-          <AuthScreen />
-        </Route>
-        <PrivateRoute
-          exact
-          path={AppRoute.Result}
-          render={({history}) => (
-            <WinScreen
-              onReplayButtonClick={() => history.push(AppRoute.Game)}
-            />
-          )}
-        />
-        <Route
-          exact
-          path={AppRoute.Lose}
-          render={({history}) => (
-            <GameOverScreen
-              onReplayButtonClick={() => history.push(AppRoute.Game)}
-            />
-          )}
-        />
-        <Route exact path={AppRoute.Game}>
-          <GameScreen />
-        </Route>
-        <Route>
-          <NotFoundScreen />
-          {/*
-            render={(props) => {
-              console.log(`404 props`, props); можно увидеть служебные пропсы
-              return (
-                <Fragment>
-                  <h1>
-                    404.
-                    <br />
-                    <small>Page not found</small>
-                  </h1>
-                  <Link to="/">Go to main page</Link>
-                </Fragment>
-              );
-            }}
-          */}
-        </Route>
-      </Switch>
-    </BrowserRouter>
+        )}
+      />
+      <Route
+        exact
+        path={AppRoute.Lose}
+        render={({history}) => (
+          <GameOverScreen
+            onReplayButtonClick={() => history.push(AppRoute.Game)}
+          />
+        )}
+      />
+      <Route exact path={AppRoute.Game}>
+        <GameScreen />
+      </Route>
+      <Route>
+        <NotFoundScreen />
+        {/*
+          render={(props) => {
+            console.log(`404 props`, props); можно увидеть служебные пропсы
+            return (
+              <Fragment>
+                <h1>
+                  404.
+                  <br />
+                  <small>Page not found</small>
+                </h1>
+                <Link to="/">Go to main page</Link>
+              </Fragment>
+            );
+          }}
+        */}
+      </Route>
+    </Switch>
   );
 }
 

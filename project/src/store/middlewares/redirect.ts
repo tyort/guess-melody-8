@@ -10,6 +10,7 @@ export const redirect: Middleware<unknown, State> =
 
         if (action.type === ActionType.RedirectToRoute) {
           // При тестировании browserHistory меняется на объект fakeHistory
+          // тогда добавляем URL в browserHistory
           browserHistory.push(action.payload);
         }
 

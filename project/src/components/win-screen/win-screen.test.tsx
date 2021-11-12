@@ -36,6 +36,7 @@ describe('Component: WinScreen', () => {
 
   it('should redirect when user click "Replay Button"', () => {
     const replayButtonClickHandle = jest.fn(
+      // от родителя пришел колбэк onReplayButtonClick={() => history.push(AppRoute.Game)}
       () => history.push(AppRoute.Game));
 
     render(

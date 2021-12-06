@@ -10,6 +10,7 @@ const AUTH_FAIL_MESSAGE = 'Не забудьте авторизоваться';
 
 export const fetchQuestionAction = (): ThunkActionResult =>
   // api - сконфигурированный экземпляр axios (а также extraArgument)
+  // thunk - это middleware(функция). Применяем, чтобы получить доступ к параметрам (dispatch, _getState, api)
   async (dispatch, _getState, api): Promise<void> => {
     const {data} = await api.get<Question[]>(APIRoute.Questions);
     dispatch(loadQuestions(data));

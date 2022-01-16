@@ -20,7 +20,7 @@ import browserHistory from './browser-history';
 // api - вернет сконфигурированный экземпляр axios
 // потом этот аргумент мы сможем передавать в качестве аргумента в api-actions
 const api = createAPI(
-  // в reducer запускаем действие, чтобы в state запихнуть AuthorizationStatus.NoAuth
+  // Мы прописали, чтобы этот колбэк вызывался в случае ответа от сервера 401;
   () => store.dispatch(requireAuthorization(AuthorizationStatus.NoAuth)),
 );
 

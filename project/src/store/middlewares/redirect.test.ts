@@ -14,8 +14,7 @@ const fakeHistory = {
 };
 
 // 1-ый аргумент: модуль, который мы хотим замокать;
-// 2-ой аругмент: колбэк, который возвращает
-// объект(аналогия с реальным browserHistory из browser-history);
+// 2-ой аругмент: колбэк, который возвращает объект(аналогия с реальным browserHistory из browser-history);
 jest.mock('../../browser-history', () => fakeHistory);
 const middlewares = [redirect];
 const mockStore = configureMockStore<State, AnyAction>(middlewares);

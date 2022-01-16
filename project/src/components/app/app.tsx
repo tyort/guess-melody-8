@@ -43,6 +43,8 @@ function App(props: PropsFromRedux): JSX.Element {
       <PrivateRoute
         exact
         path={AppRoute.Result}
+        // Только так мы сможем получить достпу к пропсу history,
+        // который мы наследуем от Router(react-router-dom)
         render={({history}) => (
           <WinScreen
             onReplayButtonClick={() => history.push(AppRoute.Game)}

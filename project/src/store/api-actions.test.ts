@@ -11,7 +11,7 @@ import {AuthData} from '../types/auth-data';
 import {makeFakeGenreQuestion, makeFakeArtistQuestion} from '../utils/mocks';
 
 describe('Async actions', () => {
-  // onFakeUnauthorized() -- вместо "()=>store.dispatch(requireAuthorization(AuthorizationStatus.NoAuth))"
+  // onFakeUnauthorized() -- вместо "() => store.dispatch(requireAuthorization(AuthorizationStatus.NoAuth))"
   // jest.fn() - генерирует фэйковую функцию. Мы могли бы использовать простую функцию, но jest нам дает полезные API
   const onFakeUnauthorized = jest.fn();
 

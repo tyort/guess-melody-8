@@ -19,6 +19,8 @@ export const fetchQuestionAction = (): ThunkActionResult =>
 export const checkAuthAction = (): ThunkActionResult =>
   async (dispatch, _getState, api) => {
     try {
+      // Мы создали колбэк в api: в случае ответа от сервера 401, который ничего не возвращает,
+      // но из-за этого мы не попадем в catch в случае кода 401;
       await api.get(APIRoute.Login);
       dispatch(requireAuthorization(AuthorizationStatus.Auth));
     } catch {
